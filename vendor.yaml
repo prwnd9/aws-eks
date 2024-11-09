@@ -1,0 +1,28 @@
+# https://atmos.tools/quick-start/vendor-components
+apiVersion: atmos/v1
+kind: AtmosVendorConfig
+metadata:
+  name: vendor-config
+  description: Atmos vendoring manifest
+spec:
+  sources:
+    # https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+    # https://github.com/terraform-aws-modules/terraform-aws-vpc
+    - component: "vpc"
+      source: "github.com/terraform-aws-modules/terraform-aws-vpc.git///?ref={{.Version}}"
+      version: "v5.15.0"
+      targets:
+        - "components/terraform/vpc"
+      included_paths:
+        - "**/*.tf"
+    # https://github.com/terraform-aws-modules/terraform-aws-eks
+    # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
+    - component: "eks"
+      source: "github.com/terraform-aws-modules/terraform-aws-eks.git///?ref={{.Version}}"
+      version: "v20.29.0"
+      targets:
+        - "components/terraform/eks"
+      included_paths:
+        - "**/*.tf"
+        - "**/modules/**"
+        - "**/templates/**"

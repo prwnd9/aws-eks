@@ -1,0 +1,51 @@
+# https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
+# https://github.com/terraform-aws-modules/terraform-aws-eks
+components:
+  terraform:
+    eks/test-eks:
+      metadata:
+        component: eks
+      vars:
+        vpc_id: '{{ (atmos.Component "vpc/test-eks" .stack).outputs.vpc_id }}'
+        subnet_ids:
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 0 }}'
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 1 }}'
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 2 }}'
+
+        cluster_name: test-eks
+        # https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html
+        cluster_version: 1.31
+
+        # Cluster access entry
+        cluster_endpoint_public_access: true
+        cluster_endpoint_public_access_cidrs:
+          - "0.0.0.0/0"
+
+        # To add the current caller identity as an administrator
+        enable_cluster_creator_admin_permissions: true
+
+        # https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
+        # https://docs.aws.amazon.com/eks/latest/userguide/managing-add-ons.html
+        # aws eks describe-addon-versions --kubernetes-version 1.31 --addon-name vpc-cni \
+        #   --query 'addons[].addonVersions[].{Version: addonVersion, Defaultversion: compatibilities[0].defaultVersion}' --output table
+        cluster_addons:
+          coredns:
+            addon_version: v1.11.3-eksbuild.1
+          kube-proxy:
+            addon_version: v1.31.0-eksbuild.2
+          vpc-cni:
+            addon_version: v1.18.3-eksbuild.2
+          eks-pod-identity-agent:
+            addon_version: v1.3.2-eksbuild.2
+
+        # used for aws alb ingress controller, autoscaler
+        enable_irsa: true
+
+        eks_managed_node_groups:
+          test-eks-main-mng:
+            instance_types:
+              - t3.micro
+            capacity_type: SPOT # ON_DEMEAND
+            min_size: 1
+            max_size: 3
+            desired_size: 1

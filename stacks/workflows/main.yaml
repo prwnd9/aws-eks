@@ -1,0 +1,24 @@
+# https://atmos.tools/core-concepts/workflows/
+stack: &stack
+  stack: org-tenant-account-ap-southeast-1
+
+workflows:
+  init:
+    <<: *stack
+    steps:
+      - command: terraform init vpc/test-eks
+
+  plan:
+    <<: *stack
+    steps:
+      - command: terraform plan vpc/test-eks
+
+  apply:
+    <<: *stack
+    steps:
+      - command: terraform apply vpc/test-eks -auto-approve
+
+  destroy:
+    <<: *stack
+    steps:
+      - command: terraform destroy vpc/test-eks -auto-approve

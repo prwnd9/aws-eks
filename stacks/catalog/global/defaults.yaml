@@ -1,0 +1,4 @@
+vars:
+  tags:
+    Terraform: true
+    atmos: true

@@ -1,0 +1,17 @@
+# https://atmos.tools/quick-start/create-atmos-stacks
+# STACK / STAGE SPECIFIC VARIABLES
+vars:
+  namespace: org
+  tenant: tenant
+  environment: account
+  stage: ap-southeast-1
+  tags:
+    stack: "{{ .atmos_stack }}"
+
+terraform:
+  backend_type: local
+
+import:
+  - catalog/global/defaults
+  - catalog/vpc/test-eks
+  - catalog/eks/test-eks
