@@ -19,17 +19,20 @@ components:
         # https://docs.aws.amazon.com/eks/latest/userguide/network_reqs.html
         # https://developer.hashicorp.com/terraform/language/functions/cidrsubnet
         # https://www.solarwinds.com/free-tools/advanced-subnet-calculator
-        # 64 subnets, 1022 hosts per subnet /22
         cidr: 10.10.0.0/16
-        public_subnets:
-          - 10.10.0.0/22
-          - 10.10.4.0/22
-          - 10.10.8.0/22
-        public_subnet_tags:
-          kubernetes.io/role/elb: 1
         private_subnets:
-          - 10.10.12.0/22
-          - 10.10.16.0/22
-          - 10.10.20.0/22
+          - 10.10.0.0/20
+          - 10.10.16.0/20
+          - 10.10.32.0/20
         private_subnet_tags:
           kubernetes.io/role/internal-elb: 1
+        public_subnets:
+          - 10.10.48.0/24
+          - 10.10.49.0/24
+          - 10.10.50.0/24
+        public_subnet_tags:
+          kubernetes.io/role/elb: 1
+        intra_subnets:
+          - 10.10.51.0/24
+          - 10.10.52.0/24
+          - 10.10.53.0/24
