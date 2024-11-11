@@ -1,0 +1,41 @@
+components:
+  terraform:
+    # https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+    # https://github.com/terraform-aws-modules/terraform-aws-vpc
+    # https://github.com/terraform-aws-modules/terraform-aws-vpc/tree/master/modules/vpc-endpoints
+    # https://github.com/terraform-aws-modules/terraform-aws-vpc/blob/master/examples/complete/main.tf
+    vpc-endpoints/test-eks:
+      metadata:
+        component: vpc-endpoints
+      vars:
+        vpc_id: '{{ (atmos.Component "vpc/test-eks" .stack).outputs.vpc_id }}'
+        create_security_group: true
+        security_group_name_prefix: "test-eks-vpc-endpoints-"
+        security_group_description: "VPC endpoint security group"
+        security_group_rules:
+          ingress_https:
+            description: "HTTPS from VPC"
+            cidr_blocks:
+              - '{{ (atmos.Component "vpc/test-eks" .stack).outputs.vpc_cidr_block }}'
+        subnet_ids:
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 0 }}'
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 1 }}'
+          - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_subnets ) 2 }}'
+        endpoints:
+          s3:
+            service: s3
+            private_dns_enabled: true
+            dns_options:
+              private_dns_only_for_inbound_resolver_endpoint: false
+            tags:
+              Name: test-eks-s3-endpoint
+          ecr_api:
+            service: ecr.api
+            private_dns_enabled: true
+            tags:
+              Name: test-eks-ecr-api-endpoint
+          ecr_dkr:
+            service: ecr.dkr
+            private_dns_enabled: true
+            tags:
+              Name: test-eks-ecr-dkr-endpoint

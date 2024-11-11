@@ -59,9 +59,23 @@ components:
         eks_managed_node_groups:
           test-eks-main-mng:
             min_size: 1
+            desired_size: 2
             max_size: 3
-            desired_size: 1
             capacity_type: SPOT # ON_DEMEAND
             instance_types:
               - t4g.micro
             ami_type: AL2023_ARM_64_STANDARD
+
+        #     taints:
+        #       # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
+        #       # The pods that do not tolerate this taint should run on nodes created by Karpenter
+        #       addons:
+        #         key: CriticalAddonsOnly
+        #         value: true
+        #         effect: NO_SCHEDULE
+        #
+        # node_security_group_tags:
+        #   # NOTE - if creating multiple security groups with this module, only tag the
+        #   # security group that Karpenter should utilize with the following tag
+        #   # (i.e. - at most, only one security group should have this tag in your account)
+        #   karpenter.sh/discovery: test-eks

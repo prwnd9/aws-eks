@@ -7,22 +7,30 @@ workflows:
     <<: *stack
     steps:
       - command: terraform init vpc/test-eks
+      - command: terraform init vpc-endpoints/test-eks
       - command: terraform init eks/test-eks
+      - command: terraform init karpenter/test-eks
 
   plan:
     <<: *stack
     steps:
       - command: terraform plan vpc/test-eks
+      - command: terraform plan vpc-endpoints/test-eks
       - command: terraform plan eks/test-eks
+      - command: terraform plan karpenter/test-eks
 
   apply:
     <<: *stack
     steps:
       - command: terraform apply vpc/test-eks -auto-approve
+      - command: terraform apply vpc-endpoints/test-eks -auto-approve
       - command: terraform apply eks/test-eks -auto-approve
+      - command: terraform apply karpenter/test-eks -auto-approve
 
   destroy:
     <<: *stack
     steps:
+      - command: terraform destroy karpenter/test-eks -auto-approve
       - command: terraform destroy eks/test-eks -auto-approve
-      # - command: terraform destroy vpc/test-eks -auto-approve
+      - command: terraform destroy vpc-endpoints/test-eks -auto-approve
+      - command: terraform destroy vpc/test-eks -auto-approve

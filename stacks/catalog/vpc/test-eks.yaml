@@ -26,6 +26,7 @@ components:
           - 10.10.32.0/20
         private_subnet_tags:
           kubernetes.io/role/internal-elb: 1
+          karpenter.sh/discovery: test-eks-v0
         public_subnets:
           - 10.10.48.0/24
           - 10.10.49.0/24

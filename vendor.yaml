@@ -15,6 +15,14 @@ spec:
         - "components/terraform/vpc"
       included_paths:
         - "**/*.tf"
+    # https://github.com/terraform-aws-modules/terraform-aws-vpc/tree/master/modules/vpc-endpoints
+    - component: "vpc-endpoints"
+      source: "github.com/terraform-aws-modules/terraform-aws-vpc.git///?ref={{.Version}}/modules/vpc-endpoints"
+      version: "v5.15.0"
+      targets:
+        - "components/terraform/vpc-endpoints"
+      included_paths:
+        - "**/*.tf"
     # https://github.com/terraform-aws-modules/terraform-aws-eks
     # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
     - component: "eks"
@@ -26,3 +34,10 @@ spec:
         - "**/*.tf"
         - "**/modules/**"
         - "**/templates/**"
+    - component: "karpenter"
+      source: "github.com/terraform-aws-modules/terraform-aws-eks.git///?ref={{.Version}}/modules/karpenter"
+      version: "v20.29.0"
+      targets:
+        - "components/terraform/karpenter"
+      included_paths:
+        - "**/*.tf"
