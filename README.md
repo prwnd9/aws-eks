@@ -1,5 +1,4 @@
-aws-eks
-=======
+# aws-eks
 
 ## Usage
 ```bash
@@ -41,6 +40,5 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter \
 ```
 
 ## Issues
-
 > [!ERROR] karpenter Pod fails to Start -The specified queue does not exist.
 > https://github.com/kubernetes-sigs/karpenter/issues/1799
