@@ -6,8 +6,8 @@ workflows:
   apply:
     <<: *stack
     steps:
-      # - command: terraform apply vpc/test-eks -auto-approve
-      # - command: terraform apply vpc-endpoints/test-eks -auto-approve
+      - command: terraform apply vpc/test-eks -auto-approve
+      - command: terraform apply vpc-endpoints/test-eks -auto-approve
       - command: terraform apply eks/test-eks-karpenter -auto-approve
       - command: terraform apply karpenter/test-eks-karpenter -auto-approve
   destroy:
@@ -15,5 +15,5 @@ workflows:
     steps:
       - command: terraform destroy karpenter/test-eks-karpenter -auto-approve
       - command: terraform destroy eks/test-eks-karpenter -auto-approve
-      # - command: terraform destroy vpc-endpoints/test-eks -auto-approve
-      # - command: terraform destroy vpc/test-eks -auto-approve
+      - command: terraform destroy vpc-endpoints/test-eks -auto-approve
+      - command: terraform destroy vpc/test-eks -auto-approve

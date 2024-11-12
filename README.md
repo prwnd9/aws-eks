@@ -14,4 +14,9 @@ atmos workflow destroy -f basic
 CLUSTER_NAME=test-eks-v0
 aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME
 kubectl get pods -A
+
+# test
+kubectl run test --image=alpine --command -- sleep infinity
+kubectl exec -it test -- sh
+kubectl delete pod test
 ```

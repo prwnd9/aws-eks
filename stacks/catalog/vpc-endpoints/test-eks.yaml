@@ -24,11 +24,12 @@ components:
         endpoints:
           s3:
             service: s3
+            service_type: Gateway
             private_dns_enabled: true
-            dns_options:
-              private_dns_only_for_inbound_resolver_endpoint: false
             tags:
               Name: test-eks-s3-endpoint
+            route_table_ids:
+              - '{{ index ((atmos.Component "vpc/test-eks" .stack).outputs.private_route_table_ids ) 0 }}'
           ecr_api:
             service: ecr.api
             private_dns_enabled: true
