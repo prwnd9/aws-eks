@@ -1,0 +1,16 @@
+components:
+  terraform:
+    iam-role-for-service-accounts-eks/autoscaler:
+      metadata:
+        component: iam-role-for-service-accounts-eks
+      vars:
+        role_name: eks-cluster-autoscaler # add eks- prefix
+        attach_cluster_autoscaler_policy: true
+        cluster_autoscaler_cluster_names:
+          [
+            '{{ (atmos.Component "eks/test-eks-basic" .stack).outputs.cluster_name }}',
+          ]
+        oidc_providers:
+          ex:
+            provider_arn: '{{ (atmos.Component "eks/test-eks-basic" .stack).outputs.oidc_provider_arn }}'
+            namespace_service_accounts: ["default:cluster-autoscaler"]

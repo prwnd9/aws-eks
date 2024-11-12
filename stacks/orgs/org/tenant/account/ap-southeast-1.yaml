@@ -20,6 +20,7 @@ import:
 
   # basic
   - catalog/eks/test-eks-basic
+  - catalog/iam-role-for-service-accounts-eks/autoscaler
 
   # karpenter
   - catalog/eks/test-eks-karpenter

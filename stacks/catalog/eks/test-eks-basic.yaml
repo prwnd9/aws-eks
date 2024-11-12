@@ -39,6 +39,20 @@ components:
         cluster_addons:
           coredns:
             addon_version: v1.11.3-eksbuild.2
+            configuration_values: |
+              {
+                "replicaCount": 1,
+                "resources": {
+                  "limits": {
+                    "cpu": "0m",
+                    "memory": "0Mi"
+                  },
+                  "requests": {
+                    "cpu": "0m",
+                    "memory": "0Mi"
+                  }
+                }
+              }
           kube-proxy:
             addon_version: v1.31.1-eksbuild.2
           # increase pod limit

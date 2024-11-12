@@ -9,9 +9,11 @@ workflows:
       - command: terraform apply vpc/test-eks -auto-approve
       - command: terraform apply vpc-endpoints/test-eks -auto-approve
       - command: terraform apply eks/test-eks-basic -auto-approve
+      - command: terraform apply iam-role-for-service-accounts-eks/autoscaler -auto-approve
   destroy:
     <<: *stack
     steps:
+      - command: terraform destroy iam-role-for-service-accounts-eks/autoscaler -auto-approve
       - command: terraform destroy eks/test-eks-basic -auto-approve
       - command: terraform destroy vpc-endpoints/test-eks -auto-approve
       - command: terraform destroy vpc/test-eks -auto-approve

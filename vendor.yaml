@@ -41,3 +41,12 @@ spec:
         - "components/terraform/karpenter"
       included_paths:
         - "**/*.tf"
+    # https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-role-for-service-accounts-eks
+    # https://github.com/terraform-aws-modules/terraform-aws-iam/tree/v5.40.1/modules/iam-role-for-service-accounts-eks
+    - component: "iam-role-for-service-accounts-eks"
+      source: "github.com/terraform-aws-modules/terraform-aws-iam.git///?ref={{.Version}}/modules/iam-role-for-service-accounts-eks"
+      version: "v5.48.0"
+      targets:
+        - "components/terraform/iam-role-for-service-accounts-eks"
+      included_paths:
+        - "**/*.tf"
