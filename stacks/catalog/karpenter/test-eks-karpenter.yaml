@@ -3,11 +3,11 @@
 # https://github.com/terraform-aws-modules/terraform-aws-eks/tree/master/modules/karpenter
 components:
   terraform:
-    karpenter/test-eks:
+    karpenter/test-eks-karpenter:
       metadata:
         component: karpenter
       vars:
-        cluster_name: '{{ (atmos.Component "eks/test-eks" .stack).outputs.cluster_name }}'
+        cluster_name: '{{ (atmos.Component "eks/test-eks-v0" .stack).outputs.cluster_name }}'
         enable_v1_permissions: true
         enable_pod_identity: true
         create_pod_identity_association: true

@@ -13,7 +13,14 @@ terraform:
 
 import:
   - catalog/global/defaults
+
+  # vpc
   - catalog/vpc/test-eks
   - catalog/vpc-endpoints/test-eks
-  - catalog/eks/test-eks
-  - catalog/karpenter/test-eks
+
+  # basic
+  - catalog/eks/test-eks-basic
+
+  # karpenter
+  - catalog/eks/test-eks-karpenter
+  - catalog/karpenter/test-eks-karpenter

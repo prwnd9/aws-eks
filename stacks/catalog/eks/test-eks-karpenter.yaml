@@ -2,7 +2,7 @@
 # https://github.com/terraform-aws-modules/terraform-aws-eks
 components:
   terraform:
-    eks/test-eks:
+    eks/test-eks-karpenter:
       metadata:
         component: eks
       vars:
@@ -18,12 +18,13 @@ components:
 
         cluster_name: test-eks-v0
         # https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html
+        # aws eks describe-addon-versions | jq -r ".addons[] | .addonVersions[] | .compatibilities[] | .clusterVersion" | sort | uniq
         cluster_version: "1.31"
 
         # Cluster access entry
         cluster_endpoint_public_access: true
         cluster_endpoint_public_access_cidrs:
-          - "0.0.0.0/0"
+          - 0.0.0.0/0
 
         # To add the current caller identity as an administrator
         enable_cluster_creator_admin_permissions: true
@@ -59,11 +60,12 @@ components:
         eks_managed_node_groups:
           test-eks-main-mng:
             min_size: 1
-            desired_size: 2
+            desired_size: 1
             max_size: 3
 
             instance_types:
               - t4g.micro
+              # - t4g.nano # TF provision fails
             ami_type: AL2023_ARM_64_STANDARD
             capacity_type: SPOT # ON_DEMEAND
 
