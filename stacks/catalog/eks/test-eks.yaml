@@ -61,21 +61,22 @@ components:
             min_size: 1
             desired_size: 2
             max_size: 3
-            capacity_type: SPOT # ON_DEMEAND
+
             instance_types:
               - t4g.micro
             ami_type: AL2023_ARM_64_STANDARD
+            capacity_type: SPOT # ON_DEMEAND
 
-        #     taints:
-        #       # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
-        #       # The pods that do not tolerate this taint should run on nodes created by Karpenter
-        #       addons:
-        #         key: CriticalAddonsOnly
-        #         value: true
-        #         effect: NO_SCHEDULE
-        #
-        # node_security_group_tags:
-        #   # NOTE - if creating multiple security groups with this module, only tag the
-        #   # security group that Karpenter should utilize with the following tag
-        #   # (i.e. - at most, only one security group should have this tag in your account)
-        #   karpenter.sh/discovery: test-eks
+            taints:
+              # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
+              # The pods that do not tolerate this taint should run on nodes created by Karpenter
+              addons:
+                key: CriticalAddonsOnly
+                value: true
+                effect: NO_SCHEDULE
+
+        node_security_group_tags:
+          # NOTE - if creating multiple security groups with this module, only tag the
+          # security group that Karpenter should utilize with the following tag
+          # (i.e. - at most, only one security group should have this tag in your account)
+          karpenter.sh/discovery: test-eks-v0

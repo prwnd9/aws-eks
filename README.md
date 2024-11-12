@@ -20,7 +20,6 @@ kubectl get pods -A
 
 # karpenter
 # https://github.com/aws/karpenter-provider-aws
-# https://github.com/aws/karpenter-provider-aws/blob/main/charts/karpenter/values.yaml
 # https://karpenter.sh/docs/getting-started/getting-started-with-karpenter/
 export KARPENTER_NAMESPACE="kube-system"
 export KARPENTER_VERSION="1.0.7"
@@ -32,8 +31,9 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter \
   --version "${KARPENTER_VERSION}" \
   --namespace "${KARPENTER_NAMESPACE}" \
   --create-namespace \
+  --set "serviceAccount.name=karpenter" \
   --set "settings.clusterName=${CLUSTER_NAME}" \
-  --set "settings.interruptionQueue=${CLUSTER_NAME}" \
+  --set "settings.interruptionQueue=Karpenter-${CLUSTER_NAME}" \
   --set "replicas=1" \
   --set logLevel=debug \
   --wait
