@@ -21,6 +21,7 @@ import:
   # basic
   - catalog/eks/test-eks-basic
   - catalog/iam-role-for-service-accounts-eks/autoscaler
+  - catalog/iam-role-for-service-accounts-eks/albc
 
   # karpenter
   - catalog/eks/test-eks-karpenter

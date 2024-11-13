@@ -1,0 +1,13 @@
+components:
+  terraform:
+    iam-role-for-service-accounts-eks/albc:
+      metadata:
+        component: iam-role-for-service-accounts-eks
+      vars:
+        role_name: aws-load-balancer-controller
+        attach_load_balancer_controller_policy: true
+        oidc_providers:
+          ex:
+            provider_arn: '{{ (atmos.Component "eks/test-eks-basic" .stack).outputs.oidc_provider_arn }}'
+            namespace_service_accounts:
+              ["kube-system:aws-load-balancer-controller"]
