@@ -32,6 +32,9 @@ components:
         # used for aws alb ingress controller, autoscaler
         enable_irsa: true
 
+        # logging
+        create_cloudwatch_log_group: false
+
         # https://docs.aws.amazon.com/eks/latest/userguide/eks-add-ons.html
         # https://docs.aws.amazon.com/eks/latest/userguide/managing-add-ons.html
         # aws eks describe-addon-versions --kubernetes-version 1.31 --addon-name vpc-cni \
